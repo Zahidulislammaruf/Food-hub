@@ -1,14 +1,55 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-
+import { AuthContext } from "../../Provider/Provider";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Swal from "sweetalert2";
 const Navbar = () => {
+  const {user,  logOut} = useContext(AuthContext)
+    
+  const handleLogOut = () =>{
+    logOut()
+    .then(()=>{
+      Swal.fire({
+        title: "Login Done",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `
+        },
+        hideClass: {
+          popup: `
+            animate__animated
+            animate__fadeOutDown
+            animate__faster
+          `
+        }
+      });
+    })
+    .catch(error=>{
+      console.log(error)
+    })
+  }
+    
     const navOption = <>
        
        <li><NavLink to='/'>Home</NavLink></li>
-       <li><NavLink to='/contact'>CONTACT Us</NavLink></li>
+      
        <li><NavLink to='/DASHBOARD'>DASHBOARD</NavLink></li>
        <li><NavLink to='/menu'>Our Menu</NavLink></li>
        <li><NavLink to='/order'>Our Shop</NavLink></li>
-    
+       {
+        user ? 
+        <>
+          <button onClick={handleLogOut} className="btn btn-ghost">Log Out</button>
+        </> 
+        :
+         <>
+                <li><NavLink to='/login'>Login</NavLink></li>
+         </>
+       }
     </>
     return (
         <div>
@@ -33,6 +74,7 @@ const Navbar = () => {
     <a className="btn">Button</a>
   </div>
 </div> 
+<ToastContainer />
         </div>
     );
 };
