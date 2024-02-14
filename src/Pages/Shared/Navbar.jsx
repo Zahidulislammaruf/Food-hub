@@ -1,12 +1,13 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Provider/Provider";
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from "sweetalert2";
+import { MdAddShoppingCart } from "react-icons/md";
+import useCart from "../../Hooks/useCart";
 const Navbar = () => {
   const {user,  logOut} = useContext(AuthContext)
-    
+  const [cart] =  useCart()
   const handleLogOut = () =>{
     logOut()
     .then(()=>{
@@ -43,6 +44,11 @@ const Navbar = () => {
        {
         user ? 
         <>
+
+        <Link to='/dashboard/cart'><button className="btn flex my-auto items-center justify-center">
+  <MdAddShoppingCart></MdAddShoppingCart>
+  <div className="badge badge-secondary">+{cart.length}</div></button></Link>
+
           <button onClick={handleLogOut} className="btn btn-ghost">Log Out</button>
         </> 
         :
@@ -71,10 +77,10 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <a className="btn">Button</a>
+    <a className="btn">{user? <>{user.displayName}</> : <>Labu</>}</a>
   </div>
 </div> 
-<ToastContainer />
+
         </div>
     );
 };
