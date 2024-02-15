@@ -29,8 +29,6 @@ const Cart = () => {
                         text: "Your file has been deleted.",
                         icon: "success"
                       });
-                      
-                      
                     }
              })
              

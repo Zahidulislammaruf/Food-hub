@@ -32,7 +32,6 @@ const FoodCard = ({item}) => {
             });
             refetch()
            }
- 
          })
       }
       else {
